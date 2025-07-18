@@ -2,19 +2,23 @@
 
 namespace WEB.Domain.Venue
 {
-    internal class Venue
+    public record VenueId(Guid Value);
+
+    public class Venue
     {
+        private Venue() { }
+
         private List<Seat> _seats = [];
-        public Venue(Guid id, string name, int maxSeatsCount, IEnumerable<Seat> seats)
+        public Venue(VenueId id, VenueName name, int maxSeatsCount, IEnumerable<Seat> seats)
         {
             Id = id;
             Name = name;
-            SeatsLimit = maxSeatsCount;
+            SeatsLimit = maxSeatsCount; 
             _seats = seats.ToList();
         }
 
-        public Guid Id { get; }
-        public string Name { get; private set; }
+        public VenueId Id { get; } = null!;
+        public VenueName Name { get; } = null!;
         public int SeatsLimit { get; private set; }
         public int SeatsCount => _seats.Count();
         public IReadOnlyList<Seat> Seats => _seats;

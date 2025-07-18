@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using WEB.Infrastructure.Postgresql;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<EFCoreServiceDbContext>(
+    _ => new EFCoreServiceDbContext(
+        builder.Configuration.GetConnectionString("LearningServiceDb") 
+        ?? throw new NullReferenceException("Подключение к бд не успешно!") 
+    )
+);
 
 var app = builder.Build();
 

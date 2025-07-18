@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WEB.Domain.Events
+﻿namespace WEB.Domain.Events
 {
-    internal class EventDetails
+    public class EventDetails
     {
+        private EventDetails()
+        {
+            
+        }
+
         public EventDetails(int capacity, string description)
         {
             Capacity = capacity;
             Description = description;
         }
-        public Guid EventId { get; } = Guid.Empty;
+        public EventId EventId { get; } = null!;
         public int Capacity { get; private set; }
-        public string Description { get; private set; }
+        public string Description { get; private set; } = null!;
     }
 }

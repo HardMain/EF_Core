@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WEB.Domain.Venue;
 
 namespace WEB.Domain.Reservation
 {
+    public record ReservationId(Guid Value);
     public class Reservation
     {
         private List<ReservationSeat> _reservedSeats;
-        public Reservation(Guid id, Guid eventId, Guid userId, IEnumerable<Guid> seatIds)
+        private Reservation()
+        {
+            
+        }
+
+        public Reservation(ReservationId id, Guid eventId, Guid userId, IEnumerable<Guid> seatIds)
         {
             Id = id;
             Status = ReservationStatus.Pending;
@@ -18,11 +20,11 @@ namespace WEB.Domain.Reservation
             UserId = userId;
 
             _reservedSeats = seatIds
-                .Select(id => new ReservationSeat(Guid.NewGuid(), this, id))
+                .Select(id => new ReservationSeat(new ReservationSeatId(Guid.NewGuid()), this, new SeatId(id)))
                 .ToList();
         }
 
-        public Guid Id { get; private set; }
+        public ReservationId Id { get; private set; } = null!;
         public Guid EventId { get; private set; }
         public Guid UserId { get; private set; }
         public ReservationStatus Status { get; private set; }

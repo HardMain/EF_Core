@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 
 namespace WEB.Domain.Venue
 {
-    internal class Seat
+    public record SeatId(Guid Value);
+
+    public class Seat
     {
-        public Seat(Guid id, int rowNumber, int seatNumber)
+        private Seat() { }
+
+        public Seat(SeatId id, int rowNumber, int seatNumber)
         {
             Id = id;
             RowNumber = rowNumber;
             SeatNumber = seatNumber;
         }
 
-        public Guid Id { get; }
+        public SeatId Id { get; }
+        public VenueId VenueId { get; private set; }
         public int RowNumber { get; private set; }
         public int SeatNumber { get; private set; }
 
@@ -27,7 +27,7 @@ namespace WEB.Domain.Venue
                 return Result.Failure<Seat>("seat.rowNumber");
             }
 
-            return Result.Success(new Seat(Guid.NewGuid(), rowNumber, seatNumber));
+            return Result.Success(new Seat(new SeatId(Guid.NewGuid()), rowNumber, seatNumber));
         }
     }
 }

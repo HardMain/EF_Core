@@ -1,18 +1,26 @@
-﻿namespace WEB.Domain.Reservation
+﻿using WEB.Domain.Venue;
+
+namespace WEB.Domain.Reservation
 {
+    public record ReservationSeatId(Guid Value);
+
     public class ReservationSeat
     {
-        public ReservationSeat(Guid id, Reservation reservationId, Guid seatId)
+        private ReservationSeat()
+        {
+            
+        }
+
+        public ReservationSeat(ReservationSeatId id, Reservation reservationId, SeatId seatId)
         {
             Id = id;
             Reservation = reservationId;
             SeatId = seatId;
             ReservedAt = DateTime.UtcNow;
         }
-        public Guid Id { get; }
-
+        public ReservationSeatId Id { get; }
         public Reservation Reservation { get; private set; }
-        public Guid SeatId { get; private set; }
+        public SeatId SeatId { get; private set; }
         public DateTime ReservedAt { get; }
     }
 }
